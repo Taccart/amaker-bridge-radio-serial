@@ -38,3 +38,4 @@ serial.redirect_to_usb()
 radio_group = radio_group_min
 radio.set_group(radio_group)
 console.log("Set RadioGroup via button A (inc) and B (dec)")
+console.log("This micro:bit is "+control.device_name())
