@@ -24,7 +24,7 @@ input.onButtonPressed(Button.B, function () {
     update_radio_group(1)
 })
 function broadcast_bridge_info () {
-    msg = "" + control.deviceName() + "_" + ("" + control.deviceSerialNumber()) + " is Radio-Serial bridge listening on " + ("" + radio_group)
+    msg = "" + control.deviceName() + ":" +  control.millis().toString() + ": is Radio-Serial bridge listening on " +  radio_group
     console.log(msg)
 radio.sendString(msg)
     serial.writeString(msg)
