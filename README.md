@@ -1,24 +1,28 @@
 
 > Open this page at [https://taccart.github.io/amaker-bridge-radio-serial/](https://taccart.github.io/amaker-bridge-radio-serial/)
 
-## Use as Extension
+This micro:bit project is a bridge between USB and radio.
+1. Serial communication is set to USB
+1. Radio channel is set to 0
+1. All strings received on `serial` (USB) are emitted on `radio`
+1. All strings received on `radio` are emitted on `serial` (USB)
+To change radio channel, button A decrements and button B increments in the range 0->8
 
-This repository can be added as an **extension** in MakeCode.
 
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/taccart/amaker-bridge-radio-serial** and import
+USB Serial speed is set to 115200, 8 bit data 1 stop.
+To read serial from USB in linux, assuming `/dev/ttyACM0` corresponds to the connected microb:bit
+1. set the speed
+```bash
+stty -F /dev/ttyACM0 115200
+```
+2. listen with cat
+```bash
+cat /dev/ttyACM0
+```
 
-## Edit this project
-
-To edit this repository in MakeCode.
-
-* open [https://makecode.microbit.org/](https://makecode.microbit.org/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/taccart/amaker-bridge-radio-serial** and click import
-
-#### Metadata (used for search, rendering)
-
-* for PXT/microbit
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+Example of serial messages received:
+```
+tizit_-1210158282 is Radio-Serial bridge listening on 0
+Set RadioGroup via button A (inc) and B (dec)
+tizit_-1210158282 is Radio-Serial bridge listening on 1
+```
