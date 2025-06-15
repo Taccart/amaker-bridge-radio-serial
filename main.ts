@@ -1,10 +1,3 @@
-function broadcast_bridge_info() {
-    let msg = control.deviceName() + "_" + ("" + control.deviceSerialNumber()) + " is Radio-Serial bridge listening on " + ("" + radio_group)
-    console.log(msg)
-    radio.sendString(msg)
-    serial.writeString(msg)
-}
-
 function update_radio_group(i: number) {
     
     radio_group += i
@@ -23,7 +16,7 @@ function update_radio_group(i: number) {
 input.onButtonPressed(Button.A, function on_button_pressed_a() {
     update_radio_group(-1)
 })
-radio.onReceivedString(function on_radio_received_string(receivedString: string) {
+radio.onReceivedString(function on_received_string(receivedString: string) {
     serial.writeString(receivedString)
     console.log("radio->serial " + receivedString)
 })
@@ -33,14 +26,26 @@ radio.onReceivedString(function on_radio_received_string(receivedString: string)
 input.onButtonPressed(Button.B, function on_button_pressed_b() {
     update_radio_group(1)
 })
-serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function on_serial_data_received() {
-    let msg = serial.readLine()
+function broadcast_bridge_info() {
+    
+    msg = "" + control.deviceName() + "_" + ("" + ("" + control.deviceSerialNumber())) + " is Radio-Serial bridge listening on " + ("" + ("" + radio_group))
+    console.log(msg)
     radio.sendString(msg)
-    console.log("serial->radio " + msg)
+    serial.writeString(msg)
+}
+
+serial.onDataReceived(serial.delimiters(Delimiters.NewLine), function on_data_received() {
+    
+    msg2 = serial.readLine()
+    radio.sendString(msg2)
+    console.log("serial->radio " + msg2)
 })
-let radio_group_max = 8
+let msg2 = ""
+let msg = ""
 let radio_group_min = 0
 let radio_group = 0
+let radio_group_max = 0
+radio_group_max = 8
 serial.redirectToUSB()
 radio_group = radio_group_min
 radio.setGroup(radio_group)
